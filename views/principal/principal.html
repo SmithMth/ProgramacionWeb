@@ -9,50 +9,29 @@
 <body>
     <header>
         <div class="logo">
-            <img src="images/Logo_umss.png" alt="Logo Universidad">
+            <img src="/images/Logo_umss.png" alt="Logo Universidad">
         </div>
         <div class="menu-icon" onclick="">
             ☰
         </div>
     </header>
     <div class="encabezado" >
-        <h1 class="main-title">Encuentra aulas disponibles</h1>
-        <h1 class="second-title">busca por:</h1>
+        <h1 class="main-title">Mis Reservas</h1>
     </div>
     
-
     <section class="cards-container">
-        <div class="card">
+        <div class="card" onclick="cardAction()">
             <h2>Fecha x Horario</h2>
-            <hr>
-            <p>Ingresa la fecha y el horario y obtendras aulas disponibles</p>
-            <button onclick="cardAction()">Buscar</button>
         </div>
-        <div class="card">
+        <div class="card" onclick="cardAction()">
             <h2>Aula x Fecha</h2>
-            <hr>
-            <p>Ingresa el Aula y la fecha que desees verificar y obtendras horarios disponibles</p>
-            <button onclick="cardAction()">Buscar</button>
         </div>
-        
-        <div class="card">
+        <div class="card" onclick="cardAction()">
             <h2>Aula x Horario</h2>
-            <hr>
-            <p>Ingresa el aula en especifico y el horario para verificar y obtendras las fechas disponibles</p>
-            <button onclick="cardAction()">Buscar</button>    
-        </div>
-        
-    </section>
-    <div class="linea-horizontal"></div>
- 
-    <section class="cards-container">
-        <div class="card pee">
-            <h2>Mis reservas</h2>
-            <hr>
-            <p>Observa las reservas que hiciste de todas tus materias</p>
-            <button onclick="cardAction()">Ver</button>
         </div>
     </section>
+
+
     <div id="form-encimado" class="mostrar ocultar">
         <div class="form-card">
             <h2>Buscar por Fecha y Horario</h2>
@@ -66,19 +45,7 @@
                 <label for="hora">Hora fin:</label>
                 <input type="time" id="hora" required>
     
-                <!-- <label for="aula">Aula:</label>
-                <select id="aula" required>
-                    <option value="101">Aula 695</option>
-                    <option value="102">Aula 515</option>
-                </select>
-    
-                <label for="materia">Materia:</label>
-                <select id="materia" required>
-                    <option value="progra">Elementos de Programacion</option>
-                    <option value="progWeb">Programacion Web</option>
-                </select> -->
-    
-                <input type="submit" value="Buscar Aulas">
+                <input type="submit" value="Buscar Aulas" class="submit-button">
             </form>
             
         </div>
@@ -86,7 +53,7 @@
 
 
 
-    <script src="scripts.js"></script>
+    <script src="/js/scripts.js"></script>
 
 </body>
 </html>

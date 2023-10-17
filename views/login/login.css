@@ -1,62 +1,72 @@
-body{
-    font-family:sans-serif;
+/* Definición de variables para colores y bordes */
+:root {
+    --fondo-principal: #f2f2f2;  /* Gris claro */
+    --boton-principal: #007bff;  /* Azul */
+    --texto-principal: #000000;  /* Negro */
+    --borde-input: #ccc;         /* Gris claro */
+    --sombra-caja: rgba(0, 0, 0, 0.1); /* Sombra ligera */
+    --radio-borde: 10px;         /* Radio del borde */
+    --tamano-input: 16px;        /* Tamaño del texto en el input */
+}
+
+body {
+    font-family: sans-serif;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background: linear-gradient(to bottom, #5ab5ff, #fab6b6);
+    background-color: var(--fondo-principal);
 }
 
-body img{
+body img {
     max-width: 300px;
     display: block;
 }
 
-.login-container{
-    width: 80%; 
+.login-container {
+    width: 80%;
     margin: 10px;
     padding: 10px;
     padding-top: 40px;
     max-width: 300px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-    background-color: rgba(255, 255, 255, 0.377);
-    
+    border-radius: var(--radio-borde);
+    box-shadow: 0px 0px 10px var(--sombra-caja);
+    background-color: floralwhite;
 }
+
 .login-container img {
     max-width: 150px;
     display: block;
-    margin: 0 auto; 
+    margin: 0 auto;
 }
 
-
-h2{
+h2 {
     text-align: center;
+    color: var(--texto-principal);
 }
-form{
+
+form {
     display: flex;
     flex-direction: column;
     align-items: center;
-  
 }
 
-input{
-    width: 70%;
-    border: 1px solid gray;
+input {
+    width: 80%;  /* Aumentado al 80% */
+    font-size: var(--tamano-input);  /* Tamaño del texto */
+    border: 1px solid var(--borde-input);
     margin: 10px;
-    padding: 8px;
-    border-radius: 10px;
+    padding: 12px;  /* Aumentado el padding */
+    border-radius: var(--radio-borde);
 }
 
-button{
-    width: 70%;
+button {
+    width: 80%;  /* Aumentado al 80% */
     border: none;
-    border-radius: 10px;
+    border-radius: var(--radio-borde);
     margin: 30px;
-    padding: 10px;
-    color: rgb(255, 255, 255);
-    background-color: rgb(218, 39, 39);
-    
+    padding: 12px;  /* Aumentado el padding */
+    color: var(--texto-principal);
+    background-color: var(--boton-principal);
 }
-

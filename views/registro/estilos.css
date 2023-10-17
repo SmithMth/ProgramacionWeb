@@ -1,17 +1,38 @@
+:root {
+    --primary-color: #007BFF;
+    --hover-color: #0056b3;
+    --text-color: #fff;
+    --input-bg: #ccc;
+    --box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;  /* Altura mínima para ocupar toda la ventana */
 }
 
 .container {
-    max-width: 500px;
+    width: 80%;  /* Ocupa el 80% del ancho de la ventana */
+    max-width: 500px; 
     margin: 50px auto;
     background-color: #fff;
     padding: 30px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--box-shadow);
+    margin: 2% 5%;  /* Margen alrededor del contenedor */
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin: 10px;  /* Margen reducido para pantallas pequeñas */
+    }
 }
 
 h2 {
@@ -31,15 +52,15 @@ input[type="number"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--input-bg);
     border-radius: 4px;
     box-sizing: border-box;
 }
 
 input[type="submit"] {
     width: 100%;
-    background-color: #007BFF;
-    color: white;
+    background-color: var(--primary-color);
+    color: var(--text-color);
     padding: 10px 15px;
     border: none;
     border-radius: 4px;
@@ -47,18 +68,15 @@ input[type="submit"] {
 }
 
 input[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color: var(--hover-color);
 }
-
-/* ----------------------------------------*/
-/* ... Tu CSS existente ... */
 
 .view-btn, .back-btn {
     display: block;
     margin-top: 20px;
     padding: 10px 15px;
-    background-color: #007BFF;
-    color: #fff;
+    background-color: var(--primary-color);
+    color: var(--text-color);
     text-decoration: none;
     text-align: center;
     border-radius: 5px;
@@ -66,7 +84,7 @@ input[type="submit"]:hover {
 }
 
 .view-btn:hover, .back-btn:hover {
-    background-color: #0056b3;
+    background-color: var(--hover-color);
 }
 
 table {
@@ -83,9 +101,6 @@ th, td {
     padding: 8px 12px;
     text-align: left;
 }
-
-
-/*filtros----------------------- */
 
 .filter-section {
     margin-bottom: 20px;

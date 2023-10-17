@@ -1,22 +1,26 @@
+:root {
+    --header-bg: #ffffff;  /* Blanco */
+    --content-bg: #f9f9f9;  /* Blanco no tan blanco */
+    --card-bg: #ffffff;  /* Blanco */
+    --button-bg: #007bff;  /* Azul */
+    --button-text: #ffffff;  /* Blanco */
+}
+
 body {
     font-family:sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(to bottom, #ecfbfd, #fad4d4); 
+    background-color: var(--content-bg);
 }
 
 header{
     display: flex;
     justify-content: space-between;
-    
-    background-color: #3491fc;
-    color: #fff;
-    padding: 10px 20px;
-    
-    
+    background-color: var(--header-bg);
+    padding: 10px 20px;    
 }
+
 .logo{
-    
     background-color: #ffffff91;
     border-radius: 10px;   
     padding: 0 5px; 
@@ -42,31 +46,28 @@ header{
     font-size: 20px;
     text-align:left;
     margin-left: 40px;
-    margin-top: 30px;
-   
-    
+    margin-top: 30px; 
 }
+
 .encabezado{
     width: 100%;  
-    padding-top: 20px;
-    padding-bottom: 100px;
-    color: white; 
-    background-color: #007BFF; 
-    border-radius: 0 0 50px 50px; 
-    background: linear-gradient(to bottom, #3491fc, #ffa99a); 
+    padding: 20px;
+    color: var(--button-text);
+    background-color: var(--content-bg);
+    border-radius: 0 0 20px 20px; 
+    background: var(--button-bg);
 }
 
 .edit-fecha-hora{
     position: relative;
-    top: -100px;
+    top: -10px;
     display: flex;
 
     flex-wrap: wrap;
     justify-content: center;
     gap: 40px; 
-
-    
 }
+
 .group-input{
     background-color: #fafafa86;
     display: flex;
@@ -77,7 +78,7 @@ header{
 
 .cards-container {
     position: relative;  
-    top: -80px;
+    top: 0px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
