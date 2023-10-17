@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/public/css/estilos.css">
+    <title>Ver Aulas Registradas</title>
+</head>
+<body>
+    
+    <div class="container">
+        <h2>Aulas Registradas</h2>
+        <div class="filter-section">
+            <div class="filter-item">
+                <label for="filter-capacity">Capacidad superior a:</label>
+                <input type="number" id="filter-capacity" min="1">
+            </div>
+            
+            <div class="filter-item">
+                <label for="filter-status">Estado:</label>
+                <select id="filter-status">
+                    <option value="all">Todos</option>
+                    <option value="active">Activos</option>
+                    <option value="inactive">No activos</option>
+                </select>
+            </div>
+            
+            <div class="filter-item">
+                <button id="filter-button">Filtrar</button>
+            </div>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Capacidad</th>
+                    <th>Activo</th>
+                </tr>
+            </thead>
+            <tbody id="aulas-list">
+                <!-- Las aulas se mostrarán aquí -->
+            </tbody>
+        </table>
+        <a href="/" class="back-btn">Volver</a>
+    </div>
+    
+    
+</body>
+<script src="/js/main.js"></script>
+
+</html>
