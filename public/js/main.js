@@ -1,5 +1,3 @@
-
-
 document.addEventListener('DOMContentLoaded', function() {
     let aulasData = [];
 
@@ -26,6 +24,15 @@ document.addEventListener('DOMContentLoaded', function() {
             tdActivo.textContent = aula.activo ? "Sí" : "No";
             tr.appendChild(tdActivo);
 
+            const tdFechaRegistro = document.createElement('td');
+
+            // Parsear y formatear la fecha
+            const date = new Date(aula.fecha_registro);
+            const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+            tdFechaRegistro.textContent = formattedDate;
+
+            tr.appendChild(tdFechaRegistro);
+
             tbody.appendChild(tr);
         });
     }
@@ -40,30 +47,39 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error("Hubo un error al obtener las aulas:", error);
         });
 
-    const filterButton = document.getElementById('filter-button');
-    filterButton.addEventListener('click', function() {
-        const capacity = parseInt(document.getElementById('filter-capacity').value);
-        const statusFilter = document.getElementById('filter-status').value;
-
-        let filteredAulas = aulasData;
-
-        // Filtrar por capacidad si se proporciona un valor
-        if (capacity) {
-            filteredAulas = filteredAulas.filter(aula => aula.capacidad > capacity);
-        }
-
-        // Filtrar por estado activo
-        switch (statusFilter) {
-            case 'active':
-                filteredAulas = filteredAulas.filter(aula => aula.activo === 1);
-                break;
-            case 'inactive':
-                filteredAulas = filteredAulas.filter(aula => aula.activo === 0);
-                break;
-            // 'all' no requiere filtrado adicional
-        }
-
-        renderAulas(filteredAulas);
-    });
+        const applyFiltersButton = document.getElementById('apply-filters');
+        applyFiltersButton.addEventListener('click', function() {
+            const minCapacity = parseInt(document.getElementById('filter-capacity-min').value) || 0;
+            const maxCapacity = parseInt(document.getElementById('filter-capacity-max').value) || Infinity;
+            const statusFilter = document.getElementById('filter-status').value;
+            const filterDate = document.getElementById('filter-date').value;
+    
+            let filteredAulas = aulasData;
+    
+            // Filtrar por capacidad
+            filteredAulas = filteredAulas.filter(aula => aula.capacidad >= minCapacity && aula.capacidad <= maxCapacity);
+    
+            // Filtrar por estado activo
+            switch (statusFilter) {
+                case 'active':
+                    filteredAulas = filteredAulas.filter(aula => aula.activo === 1);
+                    break;
+                case 'inactive':
+                    filteredAulas = filteredAulas.filter(aula => aula.activo === 0);
+                    break;
+                // 'all' no requiere filtrado adicional
+            }
+    
+            // Filtrar por fecha si se proporciona una
+            if (filterDate) {
+                filteredAulas = filteredAulas.filter(aula => {
+                    const aulaDate = new Date(aula.fecha_registro).toISOString().split('T')[0];  // Convierte la fecha a formato YYYY-MM-DD
+                    return aulaDate === filterDate;
+                });
+            }
+    
+            renderAulas(filteredAulas);
+        });
+    
 });
 

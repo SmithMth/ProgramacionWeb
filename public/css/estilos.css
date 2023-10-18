@@ -6,17 +6,21 @@ body {
 }
 
 .container {
-    max-width: 500px;
-    margin: 50px auto;
+    width: 80%;
+    margin: 10px auto;
     background-color: #fff;
-    padding: 30px;
+    padding: 10px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 h2 {
     text-align: center;
-    margin-bottom: 20px;
+}
+
+a{
+    width: 200px;
+    margin-left: 20%;
 }
 
 label {
@@ -31,14 +35,26 @@ input[type="number"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid #2f87fa;
     border-radius: 4px;
     box-sizing: border-box;
 }
 
+.cap-activo{
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: space-between;   
+}
+#capacidad {
+    width: 50px; 
+}
+#activo{
+    width: 30px;
+}
+
 input[type="submit"] {
     width: 100%;
-    background-color: #007BFF;
+    background-color: #2f87fa;
     color: white;
     padding: 10px 15px;
     border: none;
@@ -57,7 +73,7 @@ input[type="submit"]:hover {
     display: block;
     margin-top: 20px;
     padding: 10px 15px;
-    background-color: #007BFF;
+    background-color: #0e3966;
     color: #fff;
     text-decoration: none;
     text-align: center;
@@ -69,31 +85,99 @@ input[type="submit"]:hover {
     background-color: #0056b3;
 }
 
+.scrollable-table {
+    overflow-x: auto; /* Permite el desplazamiento horizontal */
+}
+
+@media only screen and (max-width: 480px) {
+    .scrollable-table {
+        margin-left: -20px; /* Para que el desplazador se alinee a la izquierda */
+        margin-right: -20px; /* Para que el desplazador se alinee a la derecha */
+    }
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    margin-left: 30px;
 }
 
 table, th, td {
-    border: 1px solid #ddd;
+    border: 2px solid #ddd;
 }
 
+
 th, td {
-    padding: 8px 12px;
+    padding: 8px 15px;
     text-align: left;
 }
 
 
 /*filtros----------------------- */
 
-.filter-section {
+
+/*por lote------------------------*/
+/* ... (El resto de tu código CSS anterior) ... */
+
+.batch-upload-section input[type="file"] {
+    padding: 10px;
     margin-bottom: 20px;
 }
 
-.filter-section label, 
-.filter-section input, 
-.filter-section button {
+/*-----------------*/
+
+
+
+.filter-item {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.filter-label {
+    font-weight: bold;
     margin-right: 10px;
-    vertical-align: middle;
+}
+
+.filter-item label {
+    margin-right: 5px;
+    font-size: 14px;
+}
+
+.filter-item input[type="number"] {
+    width: 50px;
+    padding: 5px;
+    font-size: 14px;
+
+    border-radius: 3px;
+}
+
+.capacity-inputs {
+    display: flex;
+    align-items: center;
+    
+}
+
+.filter-item select {
+    padding: 5px 10px;
+    font-size: 14px;
+
+    border-radius: 3px;
+    max-width: 110px;
+}
+
+.filter-item button {
+    width: 100%;
+    padding: 8px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.filter-item button:hover {
+    background-color: #0056b3;
 }
