@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+
     let aulasData = [];
 
     function renderAulas(aulas) {

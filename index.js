@@ -71,9 +71,38 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+
 app.get('/', (req, res) => {
+    if (req.query.error) {
+        res.send('credenciales incorrectos! <a href="/">Volver al login</a>');
+    } else {
+        res.sendFile(path.join(__dirname, 'views', 'login.html'));
+    }
+});
+
+app.post('/login', (req, res) => {
+    const { nombre, contraseña } = req.body;
+
+    const query = "SELECT * FROM usuarios WHERE nombre = ? AND contraseña = ?";
+    db.query(query, [nombre, contraseña], (err, results) => {
+        if (err) {
+            return res.status(500).send('Error en el servidor.');
+        }
+
+        if (results.length > 0) {
+            // Redireccionar a la página de registro de aulas si las credenciales son correctas
+            res.redirect('/registro_aulas');
+        } else {
+            // Redireccionar al inicio de sesión con un mensaje de error si las credenciales no son válidas
+            res.redirect('/?error=1');
+        }
+    });
+});
+
+app.get('/registro_aulas', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'registro_aulas.html'));
 });
+
 
 app.get('/ver_aulas', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'ver_aulas.html'));
