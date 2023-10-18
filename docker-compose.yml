@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  webapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_HOST: db
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: registroAulasDB
+      MYSQL_USER: user1
+      MYSQL_PASSWORD: 654321
+    volumes:
+      - ./db-dump.sql:/docker-entrypoint-initdb.d/db-dump.sql

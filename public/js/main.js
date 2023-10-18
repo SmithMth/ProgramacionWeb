@@ -1,5 +1,7 @@
+
+
 document.addEventListener('DOMContentLoaded', function() {
-    let aulasData = [];  // Almacenar todas las aulas
+    let aulasData = [];
 
     function renderAulas(aulas) {
         const tbody = document.getElementById('aulas-list');
@@ -28,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Cargar todas las aulas al cargar la página
     fetch('/api/aulas')
         .then(response => response.json())
         .then(aulas => {
@@ -39,36 +40,30 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error("Hubo un error al obtener las aulas:", error);
         });
 
-    // Filtrar aulas por capacidad
     const filterButton = document.getElementById('filter-button');
     filterButton.addEventListener('click', function() {
-        const capacity = document.getElementById('filter-capacity').value;
-        const filteredAulas = aulasData.filter(aula => aula.capacidad > capacity);
-        renderAulas(filteredAulas);
-    });
-    
-    filterButton.addEventListener('click', function() {
-        const capacity = document.getElementById('filter-capacity').value;
+        const capacity = parseInt(document.getElementById('filter-capacity').value);
         const statusFilter = document.getElementById('filter-status').value;
-    
+
         let filteredAulas = aulasData;
-    
+
         // Filtrar por capacidad si se proporciona un valor
         if (capacity) {
             filteredAulas = filteredAulas.filter(aula => aula.capacidad > capacity);
         }
-    
+
         // Filtrar por estado activo
         switch (statusFilter) {
             case 'active':
-                filteredAulas = filteredAulas.filter(aula => aula.activo == 1);
+                filteredAulas = filteredAulas.filter(aula => aula.activo === 1);
                 break;
             case 'inactive':
-                filteredAulas = filteredAulas.filter(aula => aula.activo == 0);
+                filteredAulas = filteredAulas.filter(aula => aula.activo === 0);
                 break;
             // 'all' no requiere filtrado adicional
         }
-    
+
         renderAulas(filteredAulas);
     });
 });
+
