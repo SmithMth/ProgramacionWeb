@@ -1,5 +1,5 @@
-nombre,descripcion,capacidad,activo
-690,Aula en el primer piso,123,si
-691,Aula en el segudo piso,234,no
-692,aula cuenta con proyector,321,si
-693,Aula ultimo piso nuevo edificio,222,si
+nombre,descripcion,capacidad,activo,tipoAmbiente
+690,Aula en el primer piso,123,si,1
+691,Aula en el segundo piso,234,no,2
+692,Aula cuenta con proyector,321,si,1
+693,Aula ultimo piso nuevo edificio,222,si,3

@@ -26,18 +26,17 @@ app.post('/registrar_aulas_por_lote', upload.single('csvFile'), (req, res) => {
 
     Papa.parse(aulasData, {
         header: true,
-        skipEmptyLines: true,  // Esto omitirá las líneas vacías
+        skipEmptyLines: true,
         complete: async function(results) {
             let addedCount = 0;
-    
+
             for (let aula of results.data) {
-                const { nombre, descripcion, capacidad, activo } = aula;
-    
+                const { nombre, descripcion, capacidad, activo, tipoAmbiente } = aula;
                 // Convertir "si" y "no" a valores booleanos
-                const isActivo = activo.toLowerCase() === 'si';
-    
+                const isActivo = activo.toLowerCase() === 'si' ? 1 : 0;
                 try {
-                    const [rows] = await db.promise().query("INSERT INTO aula (nombre, descripcion, capacidad, activo, fecha_registro) VALUES (?, ?, ?, ?, ?)", [nombre, descripcion, parseInt(capacidad), isActivo, new Date()]);
+                    // Llamada al procedimiento almacenado
+                    const [rows] = await db.promise().query("CALL agregar_ambiente(?, ?, ?, ?, ?)", [nombre, descripcion, parseInt(capacidad), parseInt(tipoAmbiente), isActivo]);
                     if (rows.affectedRows > 0) {
                         addedCount++;
                     }
@@ -45,14 +44,13 @@ app.post('/registrar_aulas_por_lote', upload.single('csvFile'), (req, res) => {
                     console.error('Error al insertar aula:', aula, error);
                 }
             }
-    
             // Elimina el archivo CSV una vez procesado
             fs.unlinkSync(csvFilePath);
-    
             res.send(`${addedCount} aulas agregadas con éxito.`);
         }
-    }); 
+    });
 });
+
 
 
 const db = mysql.createConnection({
@@ -134,14 +132,12 @@ app.get('/api/aulas', (req, res) => {
 
 
 app.post('/registrar_aula', (req, res) => {
-    const { nombre, descripcion, capacidad } = req.body;
-    const activo = req.body.activo ? true : false;
-    const query = "INSERT INTO aula (nombre, descripcion, capacidad, activo, fecha_registro) VALUES (?, ?, ?, ?, ?)";
-
-    db.query(query, [nombre, descripcion, capacidad, activo, new Date()], (err, result) => {
+    const { nombre, descripcion, capacidad, tipoAmbiente } = req.body;
+    const activo = req.body.activo ? 1 : 0; // Ajustado para que sea un entero
+    const callProcedure = "CALL agregar_ambiente(?, ?, ?, ?, ?)";
+    db.query(callProcedure, [nombre, descripcion, capacidad, tipoAmbiente, activo], (err, result) => {
         if (err) {
             console.error(err);
-            // Puedes ser más específico aquí verificando el tipo de error
             if (err.code === 'ER_DUP_ENTRY') {
                 return res.status(400).send('El nombre del aula ya está registrado.');
             }
@@ -151,7 +147,20 @@ app.post('/registrar_aula', (req, res) => {
     });
 });
 
+
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
+});
+
+
+//TIPOS DE AMBIENTES
+app.get('/api/tipos_ambientes', (req, res) => {
+    const query = "SELECT * FROM tipos_ambientes";
+    db.query(query, (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: "Error al obtener los tipos de ambientes" });
+        }
+        res.json(results);
+    });
 });
