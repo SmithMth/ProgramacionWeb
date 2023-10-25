@@ -31,9 +31,9 @@ app.post('/registrar_aulas_por_lote', upload.single('csvFile'), (req, res) => {
             let addedCount = 0;
 
             for (let aula of results.data) {
-                const { nombre, descripcion, capacidad, activo, tipoAmbiente } = aula;
+                const { nombre, descripcion, capacidad, habilitado, tipoAmbiente } = aula;
                 // Convertir "si" y "no" a valores booleanos
-                const isActivo = activo.toLowerCase() === 'si' ? 1 : 0;
+                const isActivo = habilitado.toLowerCase() === 'si' ? 1 : 0;
                 try {
                     // Llamada al procedimiento almacenado
                     const [rows] = await db.promise().query("CALL agregar_ambiente(?, ?, ?, ?, ?)", [nombre, descripcion, parseInt(capacidad), parseInt(tipoAmbiente), isActivo]);
@@ -56,7 +56,7 @@ app.post('/registrar_aulas_por_lote', upload.single('csvFile'), (req, res) => {
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'rot123456',
+    password: '123456',
     database: 'web'
 });
 
@@ -78,6 +78,98 @@ app.get('/', (req, res) => {
     }
 });
 
+
+app.get('/registro_aulas', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'registro_aulas.html'));
+});
+
+app.get('/ver_aulas', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'ver_aulas.html'));
+});
+
+app.get('/editar_aula/:id', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'editar_aula.html'));
+});
+
+app.get('/api/aulas', (req, res) => {
+    const query = `
+        SELECT 
+            ambientes.id,
+            ambientes.nombre AS nombre, 
+            ambientes.capacidad,
+            ambientes.descripcion,
+            ambientes.activo,
+            ambientes.habilitado,
+            tipos_ambientes.nombre AS tipo,
+            GROUP_CONCAT(facilidades.nombre) AS facilidades
+        FROM ambientes
+        JOIN tipos_ambientes ON ambientes.tipos_ambientes_id = tipos_ambientes.id
+        LEFT JOIN facilidades_ambientes ON ambientes.id = facilidades_ambientes.ambientes_id
+        LEFT JOIN facilidades ON facilidades_ambientes.facilidades_id = facilidades.id
+        GROUP BY ambientes.id
+    `;
+
+    db.query(query, (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: "Error al obtener las aulas" });
+        }
+        res.json(results);
+    });
+});
+
+app.get('/api/aula/:id', (req, res) => {
+    const { id } = req.params;
+    const query = `
+        SELECT 
+            ambientes.id,
+            ambientes.nombre AS nombre,
+            ambientes.descripcion,
+            ambientes.capacidad,
+            ambientes.activo,
+            ambientes.habilitado,
+            tipos_ambientes.nombre AS tipo,
+            GROUP_CONCAT(facilidades.nombre) AS facilidades
+        FROM ambientes
+        JOIN tipos_ambientes ON ambientes.tipos_ambientes_id = tipos_ambientes.id
+        LEFT JOIN facilidades_ambientes ON ambientes.id = facilidades_ambientes.ambientes_id
+        LEFT JOIN facilidades ON facilidades_ambientes.facilidades_id = facilidades.id
+        WHERE ambientes.id = ?
+        GROUP BY ambientes.id
+    `;
+    db.query(query, [id], (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: "Error al obtener el aula" });
+        }
+        if (results.length === 0) {
+            return res.status(404).json({ error: "Aula no encontrada" });
+        }
+        res.json(results[0]);
+    });
+});
+
+// Obtener todos los tipos de ambientes
+app.get('/api/tipos_ambientes', (req, res) => {
+    const query = "SELECT * FROM tipos_ambientes";
+    db.query(query, (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: "Error al obtener los tipos de ambientes" });
+        }
+        res.json(results);
+    });
+});
+
+// Obtener todas las facilidades
+app.get('/api/facilidades', (req, res) => {
+    const query = "SELECT * FROM facilidades";
+    db.query(query, (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: "Error al obtener las facilidades" });
+        }
+        res.json(results);
+    });
+});
+
+
 app.post('/login', (req, res) => {
     const { nombre, contraseña } = req.body;
     db.query("CALL iniciar_sesion(?, ?)", [nombre, contraseña], (err, results) => {
@@ -91,27 +183,6 @@ app.post('/login', (req, res) => {
             // Redireccionar al inicio de sesión con un mensaje de error si las credenciales no son válidas
             res.redirect('/?error=1');
         }
-    });
-});
-
-
-app.get('/registro_aulas', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'registro_aulas.html'));
-});
-
-
-app.get('/ver_aulas', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views', 'ver_aulas.html'));
-});
-
-app.get('/api/aulas', (req, res) => {
-    const query = `CALL obtener_aulas()`;
-
-    db.query(query, (err, results) => {
-        if (err) {
-            return res.status(500).json({ error: "Error al obtener las aulas" });
-        }
-        res.json(results[0]);
     });
 });
 
@@ -131,11 +202,55 @@ app.post('/registrar_aula', (req, res) => {
     });
 });
 
+app.post('/api/aula/:id/toggleHabilitar', bodyParser.json(), (req, res) => {
+    const { id } = req.params;
+    const { habilitado } = req.body;
+
+    const queryUpdateHabilitar = `
+        UPDATE ambientes 
+        SET habilitado = ?
+        WHERE id = ?
+    `;
+
+    db.query(queryUpdateHabilitar, [habilitado ? 1 : 0, id], (err) => {
+        if (err) {
+            return res.status(500).json({ success: false, error: "Error al cambiar el estado 'habilitado' del ambiente" });
+        }
+        res.json({ success: true });
+    });
+});
+
+
+app.put('/api/aula/:id', bodyParser.json(), (req, res) => {
+    const { id } = req.params;
+    const { nombre, descripcion, capacidad, activo, tipoAmbienteId, facilidades } = req.body;
+
+    const queryUpdateAmbiente = `
+        UPDATE ambientes 
+        SET nombre = ?, descripcion = ?, capacidad = ?, activo = ?, tipos_ambientes_id = ?
+        WHERE id = ?
+    `;
+
+    db.query(queryUpdateAmbiente, [nombre, descripcion, capacidad, activo, tipoAmbienteId, id], (err) => {
+        if (err) {
+            console.error(err);  
+            return res.status(500).json({ success: false, error: "Error al actualizar el ambiente" });
+        }
+
+        // Aquí puedes también actualizar las facilidades para el ambiente si es necesario
+        // ... (código para actualizar las facilidades)
+
+        res.json({ success: true });
+    });
+});
+
+
 
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
+
 
 
 //TIPOS DE AMBIENTES
@@ -160,4 +275,3 @@ app.get('/api/facilidades', (req, res) => {
         res.json(results);
     });
 });
-
