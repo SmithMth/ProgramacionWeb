@@ -56,6 +56,38 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Llenar el <select> para tipos de ambiente
+    fetch('/api/tipos_ambientes')
+        .then(response => response.json())
+        .then(tipos => {
+            const selectTipoAmbiente = document.getElementById('filter-type-ambiente');
+            tipos.forEach(tipo => {
+                const option = document.createElement('option');
+                option.value = tipo.nombre; // Asumiendo que 'id' es un campo en tus datos
+                option.textContent = tipo.nombre; // Asumiendo que 'nombre' es un campo en tus datos
+                selectTipoAmbiente.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error("Hubo un error al obtener los tipos de ambiente:", error);
+        });
+
+    // Llenar el <select> para facilidades
+    fetch('/api/facilidades')
+        .then(response => response.json())
+        .then(facilidades => {
+            const selectFacilidades = document.getElementById('filter-type-facilidad');
+            facilidades.forEach(facilidad => {
+                const option = document.createElement('option');
+                option.value = facilidad.nombre; // Asumiendo que 'id' es un campo en tus datos
+                option.textContent = facilidad.nombre; // Asumiendo que 'nombre' es un campo en tus datos
+                selectFacilidades.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error("Hubo un error al obtener las facilidades:", error);
+        });
+
     fetch('/api/aulas')
         .then(response => response.json())
         .then(aulas => {
@@ -71,33 +103,51 @@ document.addEventListener('DOMContentLoaded', function() {
             const minCapacity = parseInt(document.getElementById('filter-capacity-min').value) || 0;
             const maxCapacity = parseInt(document.getElementById('filter-capacity-max').value) || Infinity;
             const statusFilter = document.getElementById('filter-status').value;
-            const filterDate = document.getElementById('filter-date').value;
-    
+            const typeAmbiente = document.getElementById('filter-type-ambiente').value;
+            const typeFacilidad = document.getElementById('filter-type-facilidad').value;
+
             let filteredAulas = aulasData;
     
-            // Filtrar por capacidad
             filteredAulas = filteredAulas.filter(aula => aula.capacidad >= minCapacity && aula.capacidad <= maxCapacity);
     
             // Filtrar por estado activo
-            switch (statusFilter) {
-                case 'active':
-                    filteredAulas = filteredAulas.filter(aula => aula.activo === 1);
-                    break;
-                case 'inactive':
-                    filteredAulas = filteredAulas.filter(aula => aula.activo === 0);
-                    break;
-                // 'all' no requiere filtrado adicional
+            // Filtrar por estado activo/inactivo
+            if (statusFilter === 'active' || statusFilter === 'inactive') {
+                filteredAulas = filteredAulas.filter(aula => aula.habilitado === (statusFilter === 'active' ? 1 : 0));
             }
-        
-            // Filtrar por fecha si se proporciona una
-            if (filterDate) {
-                filteredAulas = filteredAulas.filter(aula => {
-                    const aulaDate = new Date(aula.fecha_registro).toISOString().split('T')[0];  // Convierte la fecha a formato YYYY-MM-DD
-                    return aulaDate === filterDate;
-                });
+            // Filtrar por tipo de ambiente
+            if (typeAmbiente !== 'all') {
+                filteredAulas = filteredAulas.filter(aula => aula.tipo === typeAmbiente);
+            }
+            // Filtrar por tipo de facilidad
+            if (typeFacilidad !== 'all') {
+                filteredAulas = filteredAulas.filter(aula => aula.facilidades.toLowerCase().includes(typeFacilidad.toLowerCase()));
             }
     
             renderAulas(filteredAulas);
         });
 });
 
+
+document.addEventListener("DOMContentLoaded", function() {
+    fetch('/api/tipos_ambientes')
+    .then(response => response.json())
+    .then(data => {
+        const select = document.getElementById('tipoAmbiente');
+        data.forEach(tipo => {
+            const option = document.createElement('option');
+            option.value = tipo.id;
+            option.textContent = tipo.nombre;
+            select.appendChild(option);
+        });
+    })
+    .catch(error => {
+        console.error('Error al obtener los tipos de ambientes:', error);
+    });
+    // Añadir un listener al formulario para obtener el valor seleccionado
+    const form = document.querySelector('form[action="/registrar_aula"]');
+    form.addEventListener('submit', function() {
+        const selectedValue = document.getElementById('tipoAmbiente').value;
+        console.log('Tipo Ambiente seleccionado:', selectedValue);  // Puedes eliminar esta línea después de comprobar que funciona correctamente.
+    });
+});

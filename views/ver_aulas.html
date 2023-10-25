@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/estilos.css">
-    <title>Ver Aulas Registradas</title>
+    <title>Ver Ambientes Registrados</title>
 </head>
 <body>
-    <h2>Aulas Registradas</h2>
+    <h2>Ambientes Registrados</h2>
     <div class="container">
         <div class="filter-container">
             <h3>Filtros</h3>
@@ -28,17 +28,28 @@
                 <label for="filter-status">Estado:</label>
                 <select id="filter-status">
                     <option value="all">Todos</option>
-                    <option value="active">Activo</option>
-                    <option value="inactive">Inactivo</option>
+                    <option value="active">Habilitado</option>
+                    <option value="inactive">Deshabilitado</option>
+                </select>
+            </div>    
+            <!-- Tipo de Ambiente -->
+            <div class="filter-item">
+                <label for="filter-type-ambiente">Tipo de Ambiente:</label>
+                <select id="filter-type-ambiente">
+                    <option value="all">Todos</option>
+                    <!-- Otras opciones se llenarán dinámicamente -->
                 </select>
             </div>
-            
-            <!-- Fecha de agregación -->
+
+            <!-- Tipo de Facilidad -->
             <div class="filter-item">
-                <label for="filter-date">Fecha:</label>
-                <input type="date" id="filter-date">
+                <label for="filter-type-facilidad">Tipo de Facilidad:</label>
+                <select id="filter-type-facilidad">
+                    <option value="all">Todos</option>
+                    <!-- Otras opciones se llenarán dinámicamente -->
+                </select>
             </div>
-            
+
             <div class="filter-item">
                 <button id="apply-filters">Aplicar Filtros</button>
             </div>
