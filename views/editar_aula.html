@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/editar_ambiente.css">
+    <title>Editar Aula</title>
+</head>
+<body>
+    <h2>Editar Aula</h2>
+    <form id="editForm">
+        <label>Nombre:</label>
+        <input type="text" id="nombre">
+        <br>
+
+        <label>Descripción:</label>
+        <input type="text" id="descripcion">
+        <br>
+
+        <label>Capacidad:</label>
+        <input type="number" id="capacidad">
+        <br>
+
+        <label>Activo:</label>
+        <input type="checkbox" id="activo">
+        <br>
+
+        <label>Tipo:</label>
+        <select  id="tipo"></select>
+        <br>
+        
+        <label>Facilidades:</label>
+        <select id="facilidades"></select>
+        <br>
+
+        <input type="submit" value="Guardar Cambios">
+    </form>
+
+    <script src="/js/editar_ambiente.js"></script>
+</body>
+</html>
