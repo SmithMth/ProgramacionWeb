@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
         aulas.forEach(aula => {
             const card = document.createElement('div');
             card.className = 'card';
+            card.setAttribute('data-aula-id', aula.id);
     
             // Bloque izquierdo
             const leftDiv = document.createElement('div');
@@ -42,19 +43,103 @@ document.addEventListener('DOMContentLoaded', function() {
             const rightDiv = document.createElement('div');
             rightDiv.className = 'right-content';
     
-            const btnSwitch = document.createElement('button');
-            btnSwitch.textContent = 'Switch';
-            rightDiv.appendChild(btnSwitch);
+            // Switch
+            const switchLabel = document.createElement('label');
+            switchLabel.className = 'switch';
+
+            switchLabel.addEventListener('click', function(event) {
+                event.stopPropagation();  // Detener la propagación al hacer clic en el label
+            });
+
+            const switchInput = document.createElement('input');
+            switchInput.type = 'checkbox';
+            switchInput.checked = aula.habilitado;  // Si el aula está habilitada, marca el switch
+            switchInput.addEventListener('change', function(event) {
+                toggleHabilitar(switchInput);  // Solo maneja el cambio de estado aquí
+            });
+
+            const switchSlider = document.createElement('span');
+            switchSlider.className = 'slider';
+
+            switchLabel.appendChild(switchInput);
+            switchLabel.appendChild(switchSlider);
+
+            rightDiv.appendChild(switchLabel);
+
+            // const btnSwitch = document.createElement('button');
+            // btnSwitch.textContent = 'Switch';
+            // btnSwitch.addEventListener('click', function(event) {
+            //     event.stopPropagation();  // Evitar que el evento se propague al padre (la tarjeta)
+            //     // Lógica para el botón Switch
+            // });
+            // rightDiv.appendChild(btnSwitch);
     
             const btnEdit = document.createElement('button');
             btnEdit.textContent = 'Editar';
+            btnEdit.addEventListener('click', function(event) {
+                event.stopPropagation();  // Evitar que el evento se propague al padre (la tarjeta)
+                window.location.href = `/editar_aula/${aula.id}`; 
+            });
             rightDiv.appendChild(btnEdit);
     
             card.appendChild(rightDiv);
     
             container.appendChild(card);
+            card.addEventListener('click', function() {
+                const modal = document.getElementById("aulaModal");
+    
+                // Rellenar información en el modal
+                document.getElementById("modal-nombre").textContent = aula.nombre;
+                document.getElementById("modal-tipo").textContent = "Tipo: " + aula.tipo;
+                document.getElementById("modal-descripcion").textContent = "Descripción: " + aula.descripcion;
+                document.getElementById("modal-facilidades").textContent = "Facilidades: " + aula.facilidades;
+                document.getElementById("modal-estado").textContent = aula.habilitado ? "Estado: habilitado" : "Estado: Inhabilitado";
+                document.getElementById("modal-activo").textContent = aula.activo ? "Sí" : "No";
+
+                // Mostrar el modal
+                modal.style.display = "block";
+    
+                // Cerrar el modal al hacer clic en la "X" o fuera del modal
+                const closeModal = document.querySelector(".close-modal");
+                closeModal.onclick = function() {
+                    modal.style.display = "none";
+                }
+    
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+            });
+        });
+        
+    }
+    function toggleHabilitar(checkboxElement) {
+        const aulaId = checkboxElement.closest('.card').getAttribute('data-aula-id');
+        const isHabilitado = checkboxElement.checked;
+    
+        fetch(`/api/aula/${aulaId}/toggleHabilitar`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ habilitado: isHabilitado })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(`Aula ${isHabilitado ? 'habilitada' : 'inhabilitada'} con éxito.`);
+            } else {
+                // Si hay un error, revertir el cambio en el switch
+                checkboxElement.checked = !isHabilitado;
+                alert('Error al cambiar el estado de la aula.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
         });
     }
+    
 
     // Llenar el <select> para tipos de ambiente
     fetch('/api/tipos_ambientes')
@@ -125,7 +210,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
     
             renderAulas(filteredAulas);
+        
+            
         });
+        
 });
 
 
