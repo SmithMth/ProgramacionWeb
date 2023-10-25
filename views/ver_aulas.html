@@ -11,7 +11,7 @@
     <div class="container">
         <div class="filter-container">
             <h3>Filtros</h3>
-        
+            
             <!-- Capacidad -->
             <div class="filter-item capacity-filter">
                 <span class="filter-label">Capacidad:</span>
@@ -22,7 +22,7 @@
                     <input type="number" id="filter-capacity-max" min="1" placeholder="999">
                 </div>
             </div>
-        
+            
             <!-- Estado -->
             <div class="filter-item">
                 <label for="filter-status">Estado:</label>
@@ -32,40 +32,30 @@
                     <option value="inactive">Inactivo</option>
                 </select>
             </div>
-        
+            
             <!-- Fecha de agregación -->
             <div class="filter-item">
                 <label for="filter-date">Fecha:</label>
                 <input type="date" id="filter-date">
             </div>
-        
+            
             <div class="filter-item">
                 <button id="apply-filters">Aplicar Filtros</button>
             </div>
         </div>
     </div>   
         
-        
-        <div class="scrollable-table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Capacidad</th>
-                        <th>Activo</th>
-                        <th>Fecha Registro</th>
-                    </tr>
-                </thead>
-                <tbody id="aulas-list">
-                    <!-- Las aulas se mostrarán aquí -->
-                </tbody>
-            </table>
+    <div class="cards-container" id="aulas-list">
+        <!-- Las tarjetas de aulas se mostrarán aquí -->
+        <!-- Ejemplo de una tarjeta:
+        <div class="card">
+            <h3>Nombre del Aula</h3>
+            <p>Capacidad: 50</p>
         </div>
-        
-        <a href="/registro_aulas" class="back-btn">Volver</a>
+        -->
+    </div>
     
-    
+    <a href="/registro_aulas" class="back-btn">Volver</a>
     
 </body>
 <script src="/js/main.js"></script>

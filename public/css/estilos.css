@@ -221,3 +221,46 @@ th, td {
     text-decoration: none;
     cursor: pointer;
 }
+
+
+.card {
+
+    width: 80%;
+    margin: 10px auto;
+    background-color: #fff;
+
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    display: flex;
+    justify-content: space-between;
+
+    padding: 5px;
+
+    
+}
+
+.left-content,
+.center-content,
+.right-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;  /* Distribuye el espacio de forma equitativa entre los bloques */
+    align-items: center; /* Centra el contenido horizontalmente */
+}
+
+.right-content button {
+    padding: 10px 15px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF; /* Color azul, puedes modificarlo a tu preferencia */
+    color: white;
+    cursor: pointer;
+}
+
+.right-content button:hover {
+    background-color: #0056b3; /* Color azul oscuro para el efecto hover */
+}
+

@@ -3,38 +3,56 @@ document.addEventListener('DOMContentLoaded', function() {
     let aulasData = [];
 
     function renderAulas(aulas) {
-        const tbody = document.getElementById('aulas-list');
-        tbody.innerHTML = '';  // Limpiar la tabla
-
+        const container = document.getElementById('aulas-list');
+        container.innerHTML = '';  // Limpiar el contenedor de tarjetas
+    
         aulas.forEach(aula => {
-            const tr = document.createElement('tr');
-            
-            const tdNombre = document.createElement('td');
-            tdNombre.textContent = aula.nombre;
-            tr.appendChild(tdNombre);
-
-            const tdDescripcion = document.createElement('td');
-            tdDescripcion.textContent = aula.descripcion;
-            tr.appendChild(tdDescripcion);
-
-            const tdCapacidad = document.createElement('td');
-            tdCapacidad.textContent = aula.capacidad;
-            tr.appendChild(tdCapacidad);
-
-            const tdActivo = document.createElement('td');
-            tdActivo.textContent = aula.activo ? "Sí" : "No";
-            tr.appendChild(tdActivo);
-
-            const tdFechaRegistro = document.createElement('td');
-
-            // Parsear y formatear la fecha
-            const date = new Date(aula.fecha_registro);
-            const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-            tdFechaRegistro.textContent = formattedDate;
-
-            tr.appendChild(tdFechaRegistro);
-
-            tbody.appendChild(tr);
+            const card = document.createElement('div');
+            card.className = 'card';
+    
+            // Bloque izquierdo
+            const leftDiv = document.createElement('div');
+            leftDiv.className = 'left-content';
+    
+            const h3Nombre = document.createElement('h3');
+            h3Nombre.textContent = aula.nombre;
+            leftDiv.appendChild(h3Nombre);
+    
+            const pTipo = document.createElement('p');
+            pTipo.textContent = aula.tipo;
+            leftDiv.appendChild(pTipo);
+    
+            card.appendChild(leftDiv);
+    
+            // Bloque central
+            const centerDiv = document.createElement('div');
+            centerDiv.className = 'center-content';
+    
+            const pCapLabel = document.createElement('p');
+            pCapLabel.textContent = "Cap.";
+            centerDiv.appendChild(pCapLabel);
+    
+            const pCapacidad = document.createElement('p');
+            pCapacidad.textContent = aula.capacidad;
+            centerDiv.appendChild(pCapacidad);
+    
+            card.appendChild(centerDiv);
+    
+            // Bloque derecho
+            const rightDiv = document.createElement('div');
+            rightDiv.className = 'right-content';
+    
+            const btnSwitch = document.createElement('button');
+            btnSwitch.textContent = 'Switch';
+            rightDiv.appendChild(btnSwitch);
+    
+            const btnEdit = document.createElement('button');
+            btnEdit.textContent = 'Editar';
+            rightDiv.appendChild(btnEdit);
+    
+            card.appendChild(rightDiv);
+    
+            container.appendChild(card);
         });
     }
 

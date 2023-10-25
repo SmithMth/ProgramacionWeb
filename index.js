@@ -58,7 +58,7 @@ app.post('/registrar_aulas_por_lote', upload.single('csvFile'), (req, res) => {
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'rot123456',
+    password: '123456',
     database: 'web'
 });
 
@@ -107,7 +107,22 @@ app.get('/ver_aulas', (req, res) => {
 });
 
 app.get('/api/aulas', (req, res) => {
-    const query = "SELECT * FROM aula";
+    const query = `
+        SELECT 
+            ambientes.id,
+            ambientes.nombre AS nombre, 
+            ambientes.capacidad,
+            ambientes.descripcion,
+            ambientes.activo,
+            tipos_ambientes.nombre AS tipo,
+            GROUP_CONCAT(facilidades.nombre) AS facilidades
+        FROM ambientes
+        JOIN tipos_ambientes ON ambientes.tipos_ambientes_id = tipos_ambientes.id
+        LEFT JOIN facilidades_ambientes ON ambientes.id = facilidades_ambientes.ambientes_id
+        LEFT JOIN facilidades ON facilidades_ambientes.facilidades_id = facilidades.id
+        GROUP BY ambientes.id
+    `;
+
     db.query(query, (err, results) => {
         if (err) {
             return res.status(500).json({ error: "Error al obtener las aulas" });
