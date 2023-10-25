@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     break;
                 // 'all' no requiere filtrado adicional
             }
-    
+        
             // Filtrar por fecha si se proporciona una
             if (filterDate) {
                 filteredAulas = filteredAulas.filter(aula => {
@@ -81,6 +81,5 @@ document.addEventListener('DOMContentLoaded', function() {
     
             renderAulas(filteredAulas);
         });
-    
 });
 

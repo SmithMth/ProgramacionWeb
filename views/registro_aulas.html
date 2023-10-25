@@ -26,8 +26,11 @@
                 <label for="capacidad">Capacidad:</label>
                 <input type="number" id="capacidad" name="capacidad" min="1" required>
             
-                <label for="activo">Activo:</label>
+                <label for="activo">Habilitado:</label>
                 <input type="checkbox" id="activo" name="activo">
+                
+                <label for="subject">Seleccione una Materia:</label>
+                <select id="tipoAmbiente" name="tipoAmbiente"></select>
             </div>
             
             
@@ -48,9 +51,8 @@
         </div>
     </div>
     <a href="/ver_aulas" class="view-btn">Ver Aulas Registradas</a>
-    <!-- Modal de mensaje -->
-
-
-    
+    <!-- Modal de mensaje -->    
 </body>
+<script src="/js/registro_ambiente.js"></script>
+
 </html>
