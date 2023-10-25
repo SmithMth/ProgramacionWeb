@@ -58,8 +58,8 @@ app.post('/registrar_aulas_por_lote', upload.single('csvFile'), (req, res) => {
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '123456',
-    database: 'RegistroAulas'
+    password: 'rot123456',
+    database: 'web'
 });
 
 db.connect((err) => {
@@ -82,14 +82,11 @@ app.get('/', (req, res) => {
 
 app.post('/login', (req, res) => {
     const { nombre, contraseña } = req.body;
-
-    const query = "SELECT * FROM usuarios WHERE nombre = ? AND contraseña = ?";
-    db.query(query, [nombre, contraseña], (err, results) => {
+    db.query("CALL iniciar_sesion(?, ?)", [nombre, contraseña], (err, results) => {
         if (err) {
             return res.status(500).send('Error en el servidor.');
         }
-
-        if (results.length > 0) {
+        if (results[0] && results[0].length > 0) {
             // Redireccionar a la página de registro de aulas si las credenciales son correctas
             res.redirect('/registro_aulas');
         } else {
@@ -98,6 +95,7 @@ app.post('/login', (req, res) => {
         }
     });
 });
+
 
 app.get('/registro_aulas', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'registro_aulas.html'));
