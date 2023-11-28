@@ -1,5 +1,3 @@
-nombre,descripcion,capacidad,habilitado,tipoAmbiente
-690,Aula en el primer piso,123,si,1
-691,Aula en el segundo piso,234,no,2
-692,Aula cuenta con proyector,321,si,1
-693,Aula ultimo piso nuevo edificio,222,si,3
+name,description,capacidad,asset,enabled,typeEnvironment,facilities
+Ambiente3,Descripción1,10,true,true,{\"id\":1,\"name\":\"Computadora\",\"description\":\"Facility Desc 1\"},"[{\"id\":3,\"name\":\"Computadora\",\"description\":\"Facility Desc 1\"},{\"id\":2,\"name\":\"Data\",\"description\":\"Facility Desc 2\"}]"
+Ambiente4,Descripción2,15,true,false,{\"id\":2,\"name\":\"Computadora\",\"description\":\"Facility Desc 1\"},"[{\"id\":1,\"name\":\"Wifi\",\"description\":\"Facility Desc 3\"},{\"id\":2,\"name\":\"Data\",\"description\":\"Facility Desc 4\"}]"
