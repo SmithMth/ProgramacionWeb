@@ -1,0 +1,23 @@
+-Crea una base de datos en mysql con el nombre "web_orm" o usuario "root" password "123456" o modifica el archivo app.module.ts
+-Desde una terminal instala: npm y nestjs
+
+-Inicializa dos terminales en las cartpetas: web-front y web-api
+
++ cd web-front/
+    npm install
+    npm run dev
+
++ cd web-api/
+    npm run start:dev
+
+- crear un usuario
+    POST: http://localhost:3000/api/users
+
+{
+    email:"email@gmail.com",
+    username:"Name",
+    lastname:"LasName",
+    password:"password"
+}
+
+- El archivo csv se encuentra en Frontend/hojaPrueba.csv
