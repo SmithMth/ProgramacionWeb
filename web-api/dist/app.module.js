@@ -17,6 +17,7 @@ const facilities_module_1 = require("./facilities/facilities.module");
 const periods_module_1 = require("./periods/periods.module");
 const types_environments_module_1 = require("./types-environments/types-environments.module");
 const bookings_module_1 = require("./bookings/bookings.module");
+const roles_module_1 = require("./roles/roles.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -39,7 +40,8 @@ exports.AppModule = AppModule = __decorate([
             facilities_module_1.FacilitiesModule,
             periods_module_1.PeriodsModule,
             types_environments_module_1.TypesEnvironmentsModule,
-            bookings_module_1.BookingsModule
+            bookings_module_1.BookingsModule,
+            roles_module_1.RolesModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

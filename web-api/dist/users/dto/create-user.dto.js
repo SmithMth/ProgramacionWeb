@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUserDto = void 0;
+const class_transformer_1 = require("class-transformer");
 const class_validator_1 = require("class-validator");
 class CreateUserDto {
 }
@@ -30,6 +31,7 @@ __decorate([
     __metadata("design:type", String)
 ], CreateUserDto.prototype, "lastname", void 0);
 __decorate([
+    (0, class_transformer_1.Transform)(({ value }) => value.trim()),
     (0, class_validator_1.IsString)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)

@@ -8,6 +8,7 @@ import { FacilitiesModule } from './facilities/facilities.module';
 import { PeriodsModule } from './periods/periods.module';
 import { TypesEnvironmentsModule } from './types-environments/types-environments.module';
 import { BookingsModule } from './bookings/bookings.module';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { BookingsModule } from './bookings/bookings.module';
     FacilitiesModule,
     PeriodsModule,
     TypesEnvironmentsModule,
-    BookingsModule
+    BookingsModule,
+    RolesModule
   ],
   controllers: [AppController],
   providers: [AppService],

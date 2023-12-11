@@ -1,5 +1,6 @@
 import { Booking } from "src/bookings/entities/booking.entity"
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany} from "typeorm"
+import { Role } from "src/roles/entities/role.entity"
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable} from "typeorm"
 
 @Entity({name: 'users'})
 export class User{
@@ -20,4 +21,8 @@ export class User{
 
     @OneToMany(() => Booking, booking => booking.environment)
     bookings: Booking[];
+
+    @ManyToMany(() => Role, role => role.users)
+    @JoinTable()
+    roles: Role[];
 }

@@ -22,6 +22,24 @@ let UsersService = class UsersService {
     constructor(userRep) {
         this.userRep = userRep;
     }
+    async findOneByEmail(email) {
+        const userFound = await this.userRep.findOne({
+            where: {
+                email: email,
+            },
+        });
+        return userFound;
+    }
+    async getUserRoles(userId) {
+        const user = await this.userRep.findOne({
+            where: { id: userId },
+            relations: ['roles'],
+        });
+        if (!user) {
+            throw new common_1.NotFoundException('User not found');
+        }
+        return user.roles;
+    }
     async create({ email, username, lastname, password }) {
         const userFound = await this.userRep.findOne({
             where: {
