@@ -3,7 +3,7 @@ import { Booking } from './entities/booking.entity';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 export declare class BookingsService {
-    private bookingRepository;
+    private readonly bookingRepository;
     constructor(bookingRepository: Repository<Booking>);
     create(createBookingDto: CreateBookingDto): Promise<Booking>;
     findAll(): Promise<Booking[]>;
@@ -19,4 +19,5 @@ export declare class BookingsService {
         isAccepted: boolean;
     }): Promise<Booking>;
     getBookingsByUser(userId: number): Promise<Booking[]>;
+    getUnacceptedBookings(): Promise<Booking[]>;
 }

@@ -14,6 +14,6 @@ export declare class UsersService {
     findAll(): Promise<User[]>;
     findOne(id: number): Promise<User>;
     update(id: number, user: UpdateUserDto): Promise<HttpException | (User & UpdateUserDto)>;
-    remove(id: number): Promise<import("typeorm").DeleteResult | HttpException>;
+    remove(id: number): Promise<HttpException | import("typeorm").DeleteResult>;
     login({ email, password }: LoginUserDto): Promise<User>;
 }

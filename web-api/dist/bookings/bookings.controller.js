@@ -36,6 +36,18 @@ let BookingsController = class BookingsController {
     remove(id) {
         return this.bookingsService.remove(+id);
     }
+    setActive(id, setActiveDto) {
+        return this.bookingsService.setActive({ id: +id, isActive: setActiveDto.isActive });
+    }
+    setAccepted(id, setAcceptedDto) {
+        return this.bookingsService.setAccepted({ id: +id, isAccepted: setAcceptedDto.isAccepted });
+    }
+    getBookingsByUser(userId) {
+        return this.bookingsService.getBookingsByUser(+userId);
+    }
+    getUnacceptedBookings() {
+        return this.bookingsService.getUnacceptedBookings();
+    }
 };
 exports.BookingsController = BookingsController;
 __decorate([
@@ -73,6 +85,35 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], BookingsController.prototype, "remove", null);
+__decorate([
+    (0, common_1.Patch)('setActive/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", void 0)
+], BookingsController.prototype, "setActive", null);
+__decorate([
+    (0, common_1.Patch)('setAccepted/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", void 0)
+], BookingsController.prototype, "setAccepted", null);
+__decorate([
+    (0, common_1.Get)('getBookingsByUser/:userId'),
+    __param(0, (0, common_1.Param)('userId')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], BookingsController.prototype, "getBookingsByUser", null);
+__decorate([
+    (0, common_1.Get)('getUnacceptedBookings'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], BookingsController.prototype, "getUnacceptedBookings", null);
 exports.BookingsController = BookingsController = __decorate([
     (0, common_1.Controller)('bookings'),
     __metadata("design:paramtypes", [bookings_service_1.BookingsService])

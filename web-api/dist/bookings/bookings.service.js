@@ -22,11 +22,20 @@ let BookingsService = class BookingsService {
         this.bookingRepository = bookingRepository;
     }
     async create(createBookingDto) {
-        const booking = this.bookingRepository.create(createBookingDto);
+        const { environment, user, period, ...bookingData } = createBookingDto;
+        const booking = this.bookingRepository.create({
+            ...bookingData,
+            environment: environment,
+            user: user,
+            period: period,
+        });
         return this.bookingRepository.save(booking);
     }
-    findAll() {
-        return this.bookingRepository.find();
+    async findAll() {
+        const bookings = await this.bookingRepository.find({
+            relations: ['user', 'period', 'environment'],
+        });
+        return bookings;
     }
     findOne(id) {
         return this.bookingRepository.findOne({ where: { id } });
@@ -57,11 +66,19 @@ let BookingsService = class BookingsService {
     async getBookingsByUser(userId) {
         const bookings = await this.bookingRepository.find({
             where: { user: { id: userId } },
+            relations: ['user', 'period', 'environment'],
         });
         if (!bookings) {
             throw new common_1.NotFoundException('No bookings found for the user');
         }
         return bookings;
+    }
+    async getUnacceptedBookings() {
+        const unacceptedBookings = await this.bookingRepository.find({
+            where: { isAccepted: false },
+            relations: ['user', 'period', 'environment'],
+        });
+        return unacceptedBookings;
     }
 };
 exports.BookingsService = BookingsService;

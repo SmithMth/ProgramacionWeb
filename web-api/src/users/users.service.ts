@@ -98,7 +98,6 @@ export class UsersService {
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
 
-    // Aquí puedes devolver el usuario, generar un token JWT, o lo que sea adecuado para tu aplicación
     return user; // Por ejemplo, devolver el usuario sin la contraseña
   }
 }

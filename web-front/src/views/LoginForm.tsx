@@ -5,7 +5,6 @@ import { login } from '../api/auth';
 
 const LoginForm = () => {
     const [formData, setFormData] = useState({ email: '', password: '', });
-
     const navigate = useNavigate(); // Hook para manejar la navegación
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -21,6 +20,13 @@ const LoginForm = () => {
         try {
             const response = await login(formData.email, formData.password);
             console.log('Respuesta del servidor:', response);
+
+            // Guarda la información del usuario en localStorage
+            localStorage.setItem('user', JSON.stringify(response.user));
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('roles', JSON.stringify(response.roles));
+
+            // Navega a la pantalla deseada (puedes cambiar '/home' según tu lógica)
             navigate('/home');
         } catch (error) {
             console.error(error);

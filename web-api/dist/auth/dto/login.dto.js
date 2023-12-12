@@ -9,21 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LoginDto = void 0;
-const class_transformer_1 = require("class-transformer");
+exports.LoginUserDto = void 0;
 const class_validator_1 = require("class-validator");
-class LoginDto {
+class LoginUserDto {
 }
-exports.LoginDto = LoginDto;
+exports.LoginUserDto = LoginUserDto;
 __decorate([
     (0, class_validator_1.IsEmail)(),
-    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], LoginDto.prototype, "email", void 0);
+], LoginUserDto.prototype, "email", void 0);
 __decorate([
-    (0, class_transformer_1.Transform)(({ value }) => value.trim()),
     (0, class_validator_1.IsString)(),
-    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
-], LoginDto.prototype, "password", void 0);
+], LoginUserDto.prototype, "password", void 0);
 //# sourceMappingURL=login.dto.js.map

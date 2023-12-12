@@ -9,4 +9,12 @@ export declare class BookingsController {
     findOne(id: string): Promise<import("./entities/booking.entity").Booking>;
     update(id: string, updateBookingDto: UpdateBookingDto): Promise<import("./entities/booking.entity").Booking>;
     remove(id: string): Promise<void>;
+    setActive(id: string, setActiveDto: {
+        isActive: boolean;
+    }): Promise<import("./entities/booking.entity").Booking>;
+    setAccepted(id: string, setAcceptedDto: {
+        isAccepted: boolean;
+    }): Promise<import("./entities/booking.entity").Booking>;
+    getBookingsByUser(userId: string): Promise<import("./entities/booking.entity").Booking[]>;
+    getUnacceptedBookings(): Promise<import("./entities/booking.entity").Booking[]>;
 }
