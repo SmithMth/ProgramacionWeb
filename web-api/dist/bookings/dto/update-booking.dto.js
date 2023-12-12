@@ -11,6 +11,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateBookingDto = void 0;
 const class_validator_1 = require("class-validator");
+const class_transformer_1 = require("class-transformer");
+const environment_entity_1 = require("../../environments/entities/environment.entity");
+const user_entity_1 = require("../../users/entities/user.entity");
+const period_entity_1 = require("../../periods/entities/period.entity");
 class UpdateBookingDto {
 }
 exports.UpdateBookingDto = UpdateBookingDto;
@@ -24,4 +28,32 @@ __decorate([
     (0, class_validator_1.IsOptional)(),
     __metadata("design:type", Date)
 ], UpdateBookingDto.prototype, "fecha", void 0);
+__decorate([
+    (0, class_validator_1.IsBoolean)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Boolean)
+], UpdateBookingDto.prototype, "isAccepted", void 0);
+__decorate([
+    (0, class_validator_1.IsBoolean)(),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", Boolean)
+], UpdateBookingDto.prototype, "isActive", void 0);
+__decorate([
+    (0, class_validator_1.ValidateNested)({ each: true }),
+    (0, class_transformer_1.Type)(() => environment_entity_1.Environment),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", environment_entity_1.Environment)
+], UpdateBookingDto.prototype, "environment", void 0);
+__decorate([
+    (0, class_validator_1.ValidateNested)({ each: true }),
+    (0, class_transformer_1.Type)(() => user_entity_1.User),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", user_entity_1.User)
+], UpdateBookingDto.prototype, "user", void 0);
+__decorate([
+    (0, class_validator_1.ValidateNested)({ each: true }),
+    (0, class_transformer_1.Type)(() => period_entity_1.Period),
+    (0, class_validator_1.IsOptional)(),
+    __metadata("design:type", period_entity_1.Period)
+], UpdateBookingDto.prototype, "period", void 0);
 //# sourceMappingURL=update-booking.dto.js.map

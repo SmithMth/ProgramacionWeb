@@ -9,6 +9,6 @@ export declare class UsersController {
     findAll(): Promise<import("./entities/user.entity").User[]>;
     findOne(id: string): Promise<import("./entities/user.entity").User>;
     update(id: string, updateUserDto: UpdateUserDto): Promise<import("@nestjs/common").HttpException | (import("./entities/user.entity").User & UpdateUserDto)>;
-    remove(id: string): Promise<import("@nestjs/common").HttpException | import("typeorm").DeleteResult>;
+    remove(id: string): Promise<import("typeorm").DeleteResult | import("@nestjs/common").HttpException>;
     login(loginUserDto: LoginUserDto): Promise<import("./entities/user.entity").User>;
 }

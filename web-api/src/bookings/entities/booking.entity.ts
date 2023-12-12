@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { IsString, IsDate } from "class-validator";
+import { IsString, IsDate, IsBoolean } from "class-validator";
 import { Environment } from "src/environments/entities/environment.entity";
 import { User } from "src/users/entities/user.entity";
 import { Period } from "src/periods/entities/period.entity";
@@ -16,6 +16,14 @@ export class Booking {
     @Column()
     @IsDate()
     fecha: Date;
+
+    @Column({ default: false }) // Añade este atributo booleano para saber si la reserva está aceptada
+    @IsBoolean()
+    isAccepted: boolean;
+
+    @Column({ default: true }) // Añade este atributo booleano para saber si la reserva está vigente
+    @IsBoolean()
+    isActive: boolean;
 
     @ManyToOne(() => Environment, environment => environment.bookings)
     environment: Environment;

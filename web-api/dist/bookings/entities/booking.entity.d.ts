@@ -5,6 +5,8 @@ export declare class Booking {
     id: number;
     affair: string;
     fecha: Date;
+    isAccepted: boolean;
+    isActive: boolean;
     environment: Environment;
     user: User;
     period: Period;

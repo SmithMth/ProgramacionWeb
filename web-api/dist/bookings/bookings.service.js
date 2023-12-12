@@ -38,6 +38,31 @@ let BookingsService = class BookingsService {
     async remove(id) {
         await this.bookingRepository.delete(id);
     }
+    async setActive({ id, isActive }) {
+        const booking = await this.bookingRepository.findOne({ where: { id } });
+        if (!booking) {
+            throw new common_1.NotFoundException('Booking not found');
+        }
+        booking.isActive = isActive;
+        return this.bookingRepository.save(booking);
+    }
+    async setAccepted({ id, isAccepted }) {
+        const booking = await this.bookingRepository.findOne({ where: { id } });
+        if (!booking) {
+            throw new common_1.NotFoundException('Booking not found');
+        }
+        booking.isAccepted = isAccepted;
+        return this.bookingRepository.save(booking);
+    }
+    async getBookingsByUser(userId) {
+        const bookings = await this.bookingRepository.find({
+            where: { user: { id: userId } },
+        });
+        if (!bookings) {
+            throw new common_1.NotFoundException('No bookings found for the user');
+        }
+        return bookings;
+    }
 };
 exports.BookingsService = BookingsService;
 exports.BookingsService = BookingsService = __decorate([

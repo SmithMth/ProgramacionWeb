@@ -11,6 +11,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateBookingDto = void 0;
 const class_validator_1 = require("class-validator");
+const class_transformer_1 = require("class-transformer");
+const environment_entity_1 = require("../../environments/entities/environment.entity");
+const user_entity_1 = require("../../users/entities/user.entity");
+const period_entity_1 = require("../../periods/entities/period.entity");
 class CreateBookingDto {
 }
 exports.CreateBookingDto = CreateBookingDto;
@@ -22,4 +26,27 @@ __decorate([
     (0, class_validator_1.IsDate)(),
     __metadata("design:type", Date)
 ], CreateBookingDto.prototype, "fecha", void 0);
+__decorate([
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], CreateBookingDto.prototype, "isAccepted", void 0);
+__decorate([
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], CreateBookingDto.prototype, "isActive", void 0);
+__decorate([
+    (0, class_validator_1.ValidateNested)(),
+    (0, class_transformer_1.Type)(() => environment_entity_1.Environment),
+    __metadata("design:type", environment_entity_1.Environment)
+], CreateBookingDto.prototype, "environment", void 0);
+__decorate([
+    (0, class_validator_1.ValidateNested)(),
+    (0, class_transformer_1.Type)(() => user_entity_1.User),
+    __metadata("design:type", user_entity_1.User)
+], CreateBookingDto.prototype, "user", void 0);
+__decorate([
+    (0, class_validator_1.ValidateNested)(),
+    (0, class_transformer_1.Type)(() => period_entity_1.Period),
+    __metadata("design:type", period_entity_1.Period)
+], CreateBookingDto.prototype, "period", void 0);
 //# sourceMappingURL=create-booking.dto.js.map

@@ -33,6 +33,16 @@ __decorate([
     __metadata("design:type", Date)
 ], Booking.prototype, "fecha", void 0);
 __decorate([
+    (0, typeorm_1.Column)({ default: false }),
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], Booking.prototype, "isAccepted", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ default: true }),
+    (0, class_validator_1.IsBoolean)(),
+    __metadata("design:type", Boolean)
+], Booking.prototype, "isActive", void 0);
+__decorate([
     (0, typeorm_1.ManyToOne)(() => environment_entity_1.Environment, environment => environment.bookings),
     __metadata("design:type", environment_entity_1.Environment)
 ], Booking.prototype, "environment", void 0);
