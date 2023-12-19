@@ -6,7 +6,7 @@ export declare class AuthService {
     private readonly usersService;
     private readonly jwtService;
     constructor(usersService: UsersService, jwtService: JwtService);
-    register(registerDto: CreateUserDto): Promise<import("@nestjs/common").HttpException | import("../users/entities/user.entity").User>;
+    register(registerDto: CreateUserDto): Promise<import("../users/entities/user.entity").User | import("@nestjs/common").HttpException>;
     login({ email, password }: LoginUserDto): Promise<{
         user: import("../users/entities/user.entity").User;
         roles: import("../roles/entities/role.entity").Role[];

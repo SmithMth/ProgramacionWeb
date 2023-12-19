@@ -27,7 +27,7 @@ const LoginForm = () => {
             localStorage.setItem('roles', JSON.stringify(response.roles));
 
             // Navega a la pantalla deseada (puedes cambiar '/home' según tu lógica)
-            navigate('/home');
+            navigate('/roles');
         } catch (error) {
             console.error(error);
         }

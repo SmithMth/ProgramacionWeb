@@ -9,6 +9,7 @@ import { PeriodsModule } from './periods/periods.module';
 import { TypesEnvironmentsModule } from './types-environments/types-environments.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { RolesModule } from './roles/roles.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -29,7 +30,8 @@ import { RolesModule } from './roles/roles.module';
     PeriodsModule,
     TypesEnvironmentsModule,
     BookingsModule,
-    RolesModule
+    RolesModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

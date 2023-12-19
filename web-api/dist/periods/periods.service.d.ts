@@ -10,4 +10,6 @@ export declare class PeriodsService {
     findOne(id: number): Promise<Period>;
     update(id: number, updatePeriodDto: UpdatePeriodDto): Promise<Period>;
     remove(id: number): Promise<void>;
+    periodStart(start: string): Promise<Period>;
+    periodEnd(end: string): Promise<Period>;
 }

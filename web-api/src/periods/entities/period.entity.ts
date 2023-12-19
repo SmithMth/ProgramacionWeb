@@ -7,10 +7,10 @@ export class Period {
     id: number;
 
     @Column({ type: 'time' })
-    private startTimeString: string;
+    startTimeString: string;
 
     @Column({ type: 'time' })
-    private endTimeString: string;
+    endTimeString: string;
 
     @OneToMany(() => Booking, booking => booking.environment)
     bookings: Booking[];

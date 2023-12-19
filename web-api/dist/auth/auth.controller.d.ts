@@ -5,5 +5,5 @@ export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
     login(loginDto: LoginUserDto): any;
-    register(newUser: CreateUserDto): Promise<import("@nestjs/common").HttpException | import("../users/entities/user.entity").User>;
+    register(newUser: CreateUserDto): Promise<import("../users/entities/user.entity").User | import("@nestjs/common").HttpException>;
 }

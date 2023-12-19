@@ -51,6 +51,28 @@ let PeriodsService = class PeriodsService {
         const period = await this.findOne(id);
         await this.periodRepository.remove(period);
     }
+    async periodStart(start) {
+        const period = await this.periodRepository.findOne({
+            where: {
+                startTimeString: start
+            }
+        });
+        if (!period) {
+            throw new common_1.NotFoundException(`Period with start "${start}" not found`);
+        }
+        return period;
+    }
+    async periodEnd(end) {
+        const period = await this.periodRepository.findOne({
+            where: {
+                endTimeString: end
+            }
+        });
+        if (!period) {
+            throw new common_1.NotFoundException(`Period with end "${end}" not found`);
+        }
+        return period;
+    }
 };
 exports.PeriodsService = PeriodsService;
 exports.PeriodsService = PeriodsService = __decorate([

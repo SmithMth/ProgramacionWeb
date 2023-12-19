@@ -1,8 +1,8 @@
 import { Booking } from "src/bookings/entities/booking.entity";
 export declare class Period {
     id: number;
-    private startTimeString;
-    private endTimeString;
+    startTimeString: string;
+    endTimeString: string;
     bookings: Booking[];
     get startTime(): Time;
     set startTime(time: Time);

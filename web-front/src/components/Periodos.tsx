@@ -20,7 +20,7 @@ export const Periodos = ({ periodo = PeriodDefault, setPeriodo = (_value: Period
     }, []);
 
     return (
-        <div className="flex flex-col sm:flex-row justify-around space-y-4 sm:space-y-0 sm:space-x-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-around space-y-4 sm:space-y-0 sm:space-x-4">
             <label htmlFor="periodos" className="block font-bold mb-2">Periodo</label>
             <div>
                 <h1 className="mb-2 text-sm sm:text-base">Inicio</h1>
@@ -51,7 +51,7 @@ export const Periodos = ({ periodo = PeriodDefault, setPeriodo = (_value: Period
                     value={periodo.endTimeString}
                     onChange={(e) => {
                         const endTimeString = periodos.find(p => p.endTimeString == e.target.value)
-                        
+
                         setPeriodo({ ...periodo, endTimeString: endTimeString?.endTimeString || PeriodDefault.endTimeString })
                     }}
                     className="block w-full p-2 border border-blue-500 rounded mb-4"

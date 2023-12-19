@@ -1,16 +1,17 @@
 // create-booking.dto.ts
-import { IsString, IsDate, IsBoolean, ValidateNested } from 'class-validator';
+import { IsString, IsDate, IsBoolean, ValidateNested, IsNumber, IsNotEmpty } from 'class-validator';
 import { Type } from 'class-transformer';
 import { Environment } from 'src/environments/entities/environment.entity';
 import { User } from 'src/users/entities/user.entity';
 import { Period } from 'src/periods/entities/period.entity';
+import { CreatePeriodDto } from 'src/periods/dto/create-period.dto';
 
 export class CreateBookingDto {
     @IsString()
     affair: string;
 
-    @IsDate()
-    fecha: Date;
+    @IsString()
+    fecha: string;
 
     @IsBoolean()
     isAccepted: boolean;
@@ -18,15 +19,15 @@ export class CreateBookingDto {
     @IsBoolean()
     isActive: boolean;
 
-    @ValidateNested() // Para incluir la entidad Environment completa
-    @Type(() => Environment)
-    environment: Environment;
+    @IsNumber() // Para incluir la entidad Environment completa
+    environmentId: number;
 
-    @ValidateNested() // Para incluir la entidad User completa
-    @Type(() => User)
-    user: User;
+    @IsNumber() 
+    userId: number;
+    
+    @IsString()
+    startTime: string;
 
-    @ValidateNested() // Para incluir la entidad Period completa
-    @Type(() => Period)
-    period: Period;
+    @IsString()
+    endTime: string;
 }

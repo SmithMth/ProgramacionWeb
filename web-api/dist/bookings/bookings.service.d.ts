@@ -2,10 +2,16 @@ import { Repository } from 'typeorm';
 import { Booking } from './entities/booking.entity';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
+import { EnvironmentService } from 'src/environments/environments.service';
+import { UsersService } from 'src/users/users.service';
+import { PeriodsService } from 'src/periods/periods.service';
 export declare class BookingsService {
     private readonly bookingRepository;
-    constructor(bookingRepository: Repository<Booking>);
-    create(createBookingDto: CreateBookingDto): Promise<Booking>;
+    private readonly serviceUser;
+    private readonly serviceEnvironment;
+    private readonly servicePeriod;
+    constructor(bookingRepository: Repository<Booking>, serviceUser: UsersService, serviceEnvironment: EnvironmentService, servicePeriod: PeriodsService);
+    create(bookingDto: CreateBookingDto): Promise<Booking[]>;
     findAll(): Promise<Booking[]>;
     findOne(id: number): Promise<Booking>;
     update(id: number, updateBookingDto: UpdateBookingDto): Promise<Booking>;

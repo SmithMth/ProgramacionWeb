@@ -8,8 +8,7 @@ import { UsersModule } from 'src/users/users.module';
 import { RolesModule } from 'src/roles/roles.module';
 
 @Module({
-  imports: [
-    forwardRef(() => UsersModule),
+  imports: [UsersModule,
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,

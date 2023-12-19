@@ -24,6 +24,7 @@ function ReservarEnvironment() {
   const [facilidades, setFacilidades] = useState<FacilityData[]>([])
   const [periodo, setPeriodo] = useState<PeriodData>(PeriodDefault)
   const [environments, setEnvironments] = useState<EnvironmentData[]>([])
+  const [environmentsOcupados, setEnvironmentsOcupados] = useState<EnvironmentData[]>([])
 
   const fetchEnvironments = async () => {
     try {
@@ -34,6 +35,14 @@ function ReservarEnvironment() {
       console.error('Error al recuperar los ambientes:', error);
     }
   };
+
+  const fetchEnvironmentsOcupados = async()=>{
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
 
   useEffect(() => {
     fetchEnvironments();

@@ -18,9 +18,11 @@ const typeorm_1 = require("@nestjs/typeorm");
 const user_entity_1 = require("./entities/user.entity");
 const typeorm_2 = require("typeorm");
 const bcryptjs = require("bcryptjs");
+const roles_service_1 = require("../roles/roles.service");
 let UsersService = class UsersService {
-    constructor(userRep) {
+    constructor(userRep, roleService) {
         this.userRep = userRep;
+        this.roleService = roleService;
     }
     async findOneByEmail(email) {
         const userFound = await this.userRep.findOne({
@@ -94,11 +96,27 @@ let UsersService = class UsersService {
         }
         return user;
     }
+    async associateUserWithRole(userId, roleId) {
+        const user = await this.userRep.findOne({ where: { id: userId }, relations: ['roles'] });
+        const role = await this.roleService.findOne(roleId);
+        if (!user || !role) {
+            throw new common_1.NotFoundException('User or role not found');
+        }
+        const existingRole = user.roles.find(existingRole => existingRole.id === roleId);
+        if (!existingRole) {
+            user.roles.push(role);
+            return this.userRep.save(user);
+        }
+        else {
+            throw new common_1.ConflictException('User already has this role');
+        }
+    }
 };
 exports.UsersService = UsersService;
 exports.UsersService = UsersService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        roles_service_1.RolesService])
 ], UsersService);
 //# sourceMappingURL=users.service.js.map

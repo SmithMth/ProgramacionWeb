@@ -11,7 +11,6 @@ function Home() {
       <div className="flex flex-col space-y-4 md:flex-row md:space-x-4 max-w-full">
         <Link to="/register" className="flex-1 bg-blue-500 text-white px-6 py-3 rounded-full flex items-center text-center justify-center">Registrar Ambiente</Link>
         <Link to="/viewEnvironment" className="flex-1 bg-green-500 text-white px-6 py-3 rounded-full flex items-center text-center justify-center">Ver Ambientes</Link>
-        <Link to="/reservas" className="flex-1 bg-purple-500 text-white px-6 py-3 rounded-full flex items-center text-center justify-center">Reservas</Link>
       </div>
     </div>
   );

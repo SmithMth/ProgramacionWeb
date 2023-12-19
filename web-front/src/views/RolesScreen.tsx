@@ -1,18 +1,26 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { RoleData } from '../interfaces/Role.interface';
 
 const RolesScreen = () => {
-    const [userRoles, setUserRoles] = useState([]);
+    const [userRoles, setUserRoles] = useState<RoleData[]>([]);
     const [selectedRole, setSelectedRole] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchRoles = async () => {
+        const fetchRoles = () => {
             try {
-                const roles = await getRoles();
-                setUserRoles(roles);
-                if (roles.length > 0) {
-                    setSelectedRole(roles[0]);
+                // Obtén los roles del localStorage
+                const storedRoles = localStorage.getItem('roles');
+                
+                if (storedRoles !== null) {
+                    // Si storedRoles no es nulo, conviértelo a un array y establece el estado
+                    const parsedRoles = JSON.parse(storedRoles);
+                    setUserRoles(parsedRoles);
+
+                    if (parsedRoles.length > 0) {
+                        setSelectedRole(parsedRoles[0].name);
+                    }
                 }
             } catch (error) {
                 console.error('Error al obtener roles:', error);
@@ -23,8 +31,21 @@ const RolesScreen = () => {
     }, []);
 
     const handleRoleSelection = () => {
-        // Puedes realizar cualquier lógica adicional aquí antes de navegar a la pantalla de inicio de sesión
-        navigate('/login');
+        // Realiza la navegación según el rol seleccionado
+        switch (selectedRole) {
+            case 'Admin':
+                navigate('/home');
+                break;
+            case 'Teacher':
+                navigate('/homeTeacher');
+                break;
+            case 'Student':
+                navigate('/homeStudent');
+                break;
+            default:
+                // Puedes manejar un caso predeterminado o lanzar un error si es necesario
+                break;
+        }
     };
 
     return (
@@ -42,8 +63,8 @@ const RolesScreen = () => {
                 className="w-full p-2 mb-3 border border-gray-300 rounded"
             >
                 {userRoles.map((role) => (
-                    <option key={role} value={role}>
-                        {role}
+                    <option key={role.id} value={role.name}>
+                        {role.name}
                     </option>
                 ))}
             </select>

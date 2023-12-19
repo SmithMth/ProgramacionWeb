@@ -68,7 +68,7 @@ export const TiposField = ({ value = [] as TypesEnvironmentData[], setValue = (_
 
     return (
         <>
-            <label htmlFor="tipoes" className="block font-bold mb-2">Tipodes:</label>
+            <label htmlFor="tipoes" className="block font-bold mb-2">Tipos:</label>
             <div className="flex flex-wrap space-x-2">
                 {value?.map((tipo) => (
                     Etiqueta(tipo)

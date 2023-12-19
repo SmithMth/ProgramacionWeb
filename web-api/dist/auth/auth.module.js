@@ -19,8 +19,7 @@ let AuthModule = class AuthModule {
 exports.AuthModule = AuthModule;
 exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
-        imports: [
-            (0, common_1.forwardRef)(() => users_module_1.UsersModule),
+        imports: [users_module_1.UsersModule,
             jwt_1.JwtModule.register({
                 global: true,
                 secret: jwt_constant_1.jwtConstants.secret,

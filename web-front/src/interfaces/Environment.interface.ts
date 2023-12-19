@@ -1,5 +1,5 @@
 import { FacilityData } from "./Facility.interface";
-import { TypesEnvironmentData, TypesEnvironmentDataDefault } from "./TypeEnvironment.interface";
+import { TypesEnvironmentData } from "./TypeEnvironment.interface";
 
 export interface EnvironmentData {
     id?: number; // Opcional porque no se conoce antes de crear el ambiente

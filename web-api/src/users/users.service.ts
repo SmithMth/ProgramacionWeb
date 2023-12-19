@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -7,11 +7,13 @@ import { Repository } from 'typeorm';
 import * as bcryptjs from 'bcryptjs'
 import { LoginUserDto } from './dto/login-user.dto';
 import { Role } from 'src/roles/entities/role.entity';
+import { RolesService } from 'src/roles/roles.service';
 
 @Injectable()
 export class UsersService {
   constructor(@InjectRepository(User)
-  private userRep: Repository<User>
+  private userRep: Repository<User>,
+  private roleService: RolesService,
   ) { }
 
   async findOneByEmail(email: string) {
@@ -100,4 +102,28 @@ export class UsersService {
 
     return user; // Por ejemplo, devolver el usuario sin la contraseña
   }
+
+  async associateUserWithRole(userId: number, roleId: number): Promise<User> {
+    const user = await this.userRep.findOne({ where: { id: userId }, relations: ['roles'] });
+    const role = await this.roleService.findOne(roleId);
+  
+    if (!user || !role) {
+      throw new NotFoundException('User or role not found');
+    }
+  
+    // Verificar si el rol ya está asociado al usuario
+    const existingRole = user.roles.find(existingRole => existingRole.id === roleId);
+  
+    if (!existingRole) {
+      // Si el rol no existe, agregar el nuevo rol
+      user.roles.push(role);
+      return this.userRep.save(user);
+    } else {
+      // Si el rol ya está asociado, puedes manejar esto según tus requisitos,
+      // por ejemplo, lanzar una excepción, enviar un mensaje de error, etc.
+      throw new ConflictException('User already has this role');
+    }
+  }
+  
+
 }

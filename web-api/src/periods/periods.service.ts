@@ -17,7 +17,7 @@ export class PeriodsService {
     period.startTime = Time.fromTimeString(createPeriodDto.startTime);
     period.endTime = Time.fromTimeString(createPeriodDto.endTime);
     return await this.periodRepository.save(period);
-}
+  }
 
 
 
@@ -37,17 +37,41 @@ export class PeriodsService {
   async update(id: number, updatePeriodDto: UpdatePeriodDto): Promise<Period> {
     const period = await this.findOne(id);
     if (updatePeriodDto.startTime) {
-        period.startTime = Time.fromTimeString(updatePeriodDto.startTime);
+      period.startTime = Time.fromTimeString(updatePeriodDto.startTime);
     }
     if (updatePeriodDto.endTime) {
-        period.endTime = Time.fromTimeString(updatePeriodDto.endTime);
+      period.endTime = Time.fromTimeString(updatePeriodDto.endTime);
     }
     return await this.periodRepository.save(period);
-}
+  }
 
 
   async remove(id: number): Promise<void> {
     const period = await this.findOne(id); // Asegúrate de que el periodo existe antes de intentar eliminarlo
     await this.periodRepository.remove(period);
   }
-}
+
+  async periodStart(start: string){
+    const period = await this.periodRepository.findOne({
+      where: {
+        startTimeString: start
+      }
+    });
+    if (!period) {
+      throw new NotFoundException(`Period with start "${start}" not found`);
+    }
+    return period
+  }
+
+  async periodEnd(end: string){
+    const period = await this.periodRepository.findOne({
+      where: {
+        endTimeString: end
+      }
+    });
+    if (!period) {
+      throw new NotFoundException(`Period with end "${end}" not found`);
+    }
+    return period
+  }
+}  

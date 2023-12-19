@@ -1,31 +1,67 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
 import { Booking } from './entities/booking.entity';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 import { EnvironmentService } from 'src/environments/environments.service';
 import { UsersService } from 'src/users/users.service';
 import { PeriodsService } from 'src/periods/periods.service';
+import { format } from 'date-fns';
 
 @Injectable()
 export class BookingsService {
     constructor(
         @InjectRepository(Booking)
         private readonly bookingRepository: Repository<Booking>,
+        private readonly serviceUser: UsersService,
+        private readonly serviceEnvironment: EnvironmentService,
+        private readonly servicePeriod: PeriodsService,
     ) { }
 
-    async create(createBookingDto: CreateBookingDto): Promise<Booking> {
-        const { environment, user, period, ...bookingData } = createBookingDto;
-        // Crea la reserva y asigna las entidades relacionadas
-        const booking = this.bookingRepository.create({
-            ...bookingData,
-            environment: environment,
-            user: user,
-            period: period,
+    async create(bookingDto: CreateBookingDto) {
+        const { environmentId, userId, ...bookingData } = bookingDto;
+        // Obtener el entorno y usuario asociados a la reserva
+        const environment = await this.serviceEnvironment.findOne(environmentId);
+        const user = await this.serviceUser.findOne(userId);
+      
+        // Obtener los períodos inicial y final
+        const periodoInicial = await this.servicePeriod.periodStart(bookingData.startTime);
+        const periodoFinal = await this.servicePeriod.periodEnd(bookingData.endTime);
+      
+        // Verificar si hay reservas existentes en el rango de tiempo
+        const existingBookings = await this.bookingRepository.find({
+          where: {
+            environment: {id: environment.id},
+            period: {
+              id: Between(periodoInicial.id, periodoFinal.id),
+            },
+          },
         });
-        return this.bookingRepository.save(booking);
-    }
+      
+        // Si hay reservas existentes, cancelar la creación y devolver un mensaje apropiado
+        if (existingBookings.length > 0) {
+          throw new ConflictException('Ya existen reservas en el período de tiempo especificado.');
+        }
+      
+        // Crear la reserva
+        const bookings: Booking[] = [];
+        for (let id = periodoInicial.id; id <= periodoFinal.id; id++) {
+          const periodo = await this.servicePeriod.findOne(id);
+          const booking = this.bookingRepository.create({
+            ...bookingData,
+            environment,
+            user,
+            period: periodo,
+          });
+          bookings.push(booking);
+        }
+      
+        // Guardar las reservas
+        return this.bookingRepository.save(bookings);
+      }
+      
+
 
     async findAll(): Promise<Booking[]> {
         const bookings = await this.bookingRepository.find({

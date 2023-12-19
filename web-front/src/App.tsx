@@ -6,6 +6,9 @@ import EditEnvironment from './views/EditEnvironment';
 import Home from './views/Home';
 import ReservarEnvironment from './views/ReservarEnvironment';
 import Reserva from './views/Reserva';
+import RolesScreen from './views/RolesScreen';
+import HomeTeacher from './views/HomeTeacher';
+import ReservasUser from './views/ReservasUser';
 
 function App() {
 
@@ -22,6 +25,9 @@ function App() {
           <Route path="/reservarEnvironment/:data" element={<Reserva/>} />
 
           <Route path="/home" element={<Home />} />
+          <Route path="/homeTeacher" element={<HomeTeacher/>} />
+          <Route path="/misReservas" element={<ReservasUser />} />
+          <Route path="/roles" element={<RolesScreen />} />
         </Routes>
       </Router>
     </div>

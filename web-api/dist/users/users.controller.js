@@ -40,6 +40,9 @@ let UsersController = class UsersController {
     login(loginUserDto) {
         return this.usersService.login(loginUserDto);
     }
+    associateUserWithRole(userId, roleId) {
+        return this.usersService.associateUserWithRole(userId, roleId);
+    }
 };
 exports.UsersController = UsersController;
 __decorate([
@@ -84,6 +87,14 @@ __decorate([
     __metadata("design:paramtypes", [login_user_dto_1.LoginUserDto]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "login", null);
+__decorate([
+    (0, common_1.Post)('associate-role/:userId/:roleId'),
+    __param(0, (0, common_1.Param)('userId', common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Param)('roleId', common_1.ParseIntPipe)),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number]),
+    __metadata("design:returntype", Promise)
+], UsersController.prototype, "associateUserWithRole", null);
 exports.UsersController = UsersController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])

@@ -21,6 +21,7 @@ exports.EnvironmentsModule = EnvironmentsModule = __decorate([
     (0, common_1.Module)({
         imports: [
             facilities_module_1.FacilitiesModule,
+            EnvironmentsModule,
             types_environments_module_1.TypesEnvironmentsModule,
             typeorm_1.TypeOrmModule.forFeature([environment_entity_1.Environment])
         ],
